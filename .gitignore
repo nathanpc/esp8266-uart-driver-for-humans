@@ -1,0 +1,7 @@
+# Objects and binaries.
+build/
+dist/
+
+# Misc.
+.DS_Store
+
