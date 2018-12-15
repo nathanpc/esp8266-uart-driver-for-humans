@@ -15,10 +15,6 @@
 // Include the library.
 #include "sane_uart.h"
 
-// Function prototypes.
-void ICACHE_FLASH_ATTR print_system_info();
-void ICACHE_FLASH_ATTR print_reset_info(struct rst_info *resinfo);
-
 /**
  * Character received interrupt.
  *
