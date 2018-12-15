@@ -5,8 +5,6 @@
  * @author Nathan Campos <nathan@innoveworkshop.com>
  */
 
-#define DEBUG
-
 #include <c_types.h>
 #include <user_interface.h>
 #include <osapi.h>
