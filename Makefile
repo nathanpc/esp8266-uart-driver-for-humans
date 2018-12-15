@@ -40,7 +40,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 flash: $(DISTDIR)/$(PROJECT)-0x00000.bin
-	sudo chmod 777 $(PORT)  # Don't look, this is here because I'm lazy right now.
 	esptool.py -p $(PORT) write_flash 0x00000 "$(DISTDIR)/$(PROJECT)-0x00000.bin" 0x10000 "$(DISTDIR)/$(PROJECT)-0x10000.bin"
 
 monitor:

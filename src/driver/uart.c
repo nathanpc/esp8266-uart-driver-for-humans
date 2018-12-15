@@ -118,7 +118,7 @@ uart_config(uint8 uart_no)
  * Parameters   : uint8 TxChar - character to tx
  * Returns      : OK
 *******************************************************************************/
- STATUS uart_tx_one_char(uint8 uart, uint8 TxChar)
+STATUS uart_tx_one_char(uint8 uart, uint8 TxChar)
 {
     while (true){
         uint32 fifo_cnt = READ_PERI_REG(UART_STATUS(uart)) & (UART_TXFIFO_CNT<<UART_TXFIFO_CNT_S);
@@ -239,6 +239,10 @@ uart0_rx_intr_handler(void *para)
         DBG1("FRM_ERR\r\n");
         WRITE_PERI_REG(UART_INT_CLR(uart_no), UART_FRM_ERR_INT_CLR);
     }else if(UART_RXFIFO_FULL_INT_ST == (READ_PERI_REG(UART_INT_ST(uart_no)) & UART_RXFIFO_FULL_INT_ST)){
+		char *str = "\r\n\r\nBUFFER FULL!!!\r\n\r\n";
+		while (*str) {
+			uart_tx_one_char(UART0, *str++);
+		}
         DBG("f");
         uart_rx_intr_disable(UART0);
         WRITE_PERI_REG(UART_INT_CLR(UART0), UART_RXFIFO_FULL_INT_CLR);
@@ -319,7 +323,7 @@ void ICACHE_FLASH_ATTR
 uart_init(UartBautRate uart0_br, UartBautRate uart1_br)
 {
     /*this is a example to process uart data from task,please change the priority to fit your application task if exists*/
-    system_os_task(uart_recvTask, uart_recvTaskPrio, uart_recvTaskQueue, uart_recvTaskQueueLen);  //demo with a task to process the uart data
+    //system_os_task(uart_recvTask, uart_recvTaskPrio, uart_recvTaskQueue, uart_recvTaskQueueLen);  //demo with a task to process the uart data
     
     UartDev.baut_rate = uart0_br;
     uart_config(UART0);
